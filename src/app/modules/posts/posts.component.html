@@ -1,0 +1,288 @@
+<div class="row">
+    <div class="col-sm-4">   
+    <div class="col-md-12 col-sm-12">
+    <div class="card-container">
+        
+       <div class="card">
+        <h4 class="card-header " style="text-align: center ;" >Patient</h4>
+           <div class="front">
+               <div class="cover">
+                   <img src="assets/images/rotating.png">
+               </div>
+               <div class="user">
+                   <img class="img-circle" src="assets/images/logo.png">
+               </div>
+               <div class="content">
+                   <div class="main">
+                    <div *ngIf="patient">
+                       <h3 class="name">Code:{{patient.code}}</h3>
+                       <h5 class="name">Tel:{{patient.tel}}</h5>
+                       <p class="name">{{patient.nom}} {{patient.prenom}}</p>
+                       <p class="profession">{{patient.age}} ans </p>
+
+                       <p class="text-center">{{patient.antecedent}}</p>
+                       </div>
+                   </div>
+                   
+               </div>
+           </div> <!-- end front panel -->
+           <div class="back">
+               <div class="header">
+                   <h5 class="motto">"Patient Depuis 12/01/2018"</h5>
+                  
+               </div>
+               <div class="content">
+                   <div class="main">
+                    <div *ngIf="patient">
+                       <h4 class="text-center">{{patient.nom}} {{patient.prenom}}</h4>
+                       <p class="text-center"></p>
+
+                       <div class="stats-container">
+                           <div class="stats">
+                               <h4>35</h4>
+                               <p>
+                                  visites
+                               </p>
+                           </div>
+                           <div class="stats">
+                               <h4>14</h4>
+                               <p>
+                                Diagnostics 
+                               </p>
+                           </div>
+                           <div class="stats">
+                               <h4>15</h4>
+                               <p>
+                                Ordonnance 
+                               </p>
+                           </div>
+                       </div>
+
+                   </div>
+                  </div>
+               </div>
+              
+           </div> <!-- end back panel -->
+       </div> <!-- end card -->
+   </div> <!-- end card-container -->
+</div>
+          
+       
+    </div>
+    <div class="col-sm-8">
+      <mat-card  *ngIf="visite">
+      
+          <div class="card-deck" *ngIf="visite.visiteDocs.length>1" >
+            <div class="card "  *ngFor="let doc of visite.visiteDocs">
+              <div class="text-center">
+              <img class="rounded" src="{{this.visiteService.host+'general/Image/'+doc.id}}?ts='+getTS()"   style="width: 100px; height: 80px;" alt="Card image cap">
+            </div>
+              <div class="card-body">
+                <h5 class="card-title"  class="text-center">{{doc.type}}</h5>
+                <span class="card-text">{{visite.type }}</span><br>
+                <span class="card-text">{{visite.objet}}</span>
+              </div>
+              <div class="card-footer text-center">
+                <small class="text-muted"  >{{visite.date | date: 'dd/MM/yyyy' }}</small>
+              </div>
+            </div>
+            
+            
+          
+        </div>
+        </mat-card>
+    <br>
+      <div class="card">
+        <h4 class="card-header " style="text-align: center ;" >Visites</h4>
+        <div class="float-left ml-3" >
+            <button mat-mini-fab color="primary" data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo">
+                <mat-icon>add</mat-icon>
+              </button>
+            </div>
+              <div  class="mat-elevation-z8" >
+                <table mat-table [dataSource]="dataSource" matSort>
+                  <!-- ID Column -->
+                  <ng-container matColumnDef="id">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> ID </th>
+                    <td mat-cell *matCellDef="let row"> {{row.id}} </td>
+                  </ng-container>
+                  <!-- Name Column -->
+                <ng-container matColumnDef="date">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Date</th>
+                    <td mat-cell *matCellDef="let row"> {{row.date| date: 'dd/MM/yyyy'}} </td>
+                  </ng-container>
+              
+                 
+                  <ng-container matColumnDef="type">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Type</th>
+                    <td mat-cell *matCellDef="let row"> {{row.type}} </td>
+                  </ng-container>
+                
+              
+                  
+                  
+                  
+                  <ng-container matColumnDef="info">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Info</th>
+                    <td mat-cell *matCellDef="let row">
+                        <button mat-mini-fab color="primary" style="cursor: pointer" (click)="onSelectVisite(row)" >
+                            <mat-icon> info</mat-icon>
+                            
+                        </button>  </td>
+                
+                  </ng-container>
+                  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+              
+                  <!-- Row shown when there is no matching data. -->
+                  <tr class="mat-row" *matNoDataRow>
+                    <td class="mat-cell" colspan="4">No data matching the filter "{{input.value}}"</td>
+                  </tr>
+                  <tr mat-header-row>
+                 <td>kkkkk</td>
+                  </tr>
+                </table>
+              
+                <mat-paginator [pageSizeOptions]="[5, 10]"></mat-paginator>
+              </div>
+        
+
+        
+        <!---
+        <div class="card-body">
+
+            <div class="row" *ngIf="visites">
+                <div class="col-sm-4" *ngFor="let visite of visites">
+                  <div class="card" >
+                    <div class="card-body" >
+                      <h5 class="card-title" *ngIf="visite.type=='Rendez-Vous'"><span class="badge badge-primary"> <mat-icon >timer</mat-icon>Rendez-Vous 
+                           </span>  </h5>
+                           <h5 class="card-title" *ngIf="visite.type=='Consultation'" ><span class="badge badge-info"><mat-icon>supervisor_account</mat-icon> Consultation </span></h5>
+                      <span class="card-text ">
+                        <mat-icon>date_range</mat-icon> {{visite.date | date: 'dd/MM/yyyy'}} </span> 
+                     <br>
+                     <br>
+                      <a href="#" class="btn btn-primary btn-sm">Détails</a>
+                    </div>
+                  </div>
+                </div>
+               
+              
+                  
+               
+              </div>
+
+            
+        </div>
+        -->
+      </div>
+  
+    
+  </div>
+
+
+ 
+
+  <div class="modal fade" id="exampleModal"  data-backdrop="false" >
+    <div class="modal-dialog ">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Nouvelle Visite</h5>
+          <button type="button" class="close" data-dismiss="modal" id="close" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <form [formGroup]="VisiteForm" (ngSubmit)="onSubmit()" >
+            <table class="example-full-width" cellspacing="1"><tr>
+                <td>
+            <mat-form-field >
+                <mat-label>Date</mat-label>
+                <input matInput [matDatepicker]="picker" formControlName="date">
+               <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                <mat-datepicker #picker></mat-datepicker>
+              </mat-form-field>
+            </td>
+        </tr>
+           <tr>
+                <td>
+                    <mat-form-field >
+                        <mat-label>Type</mat-label>
+                        <mat-select formControlName="type">
+                          
+                          <mat-option   value="Rendez-Vous">
+                            Rendez-Vous
+                          </mat-option>
+                          <mat-option  value="Consultation">
+                            Consultation
+                          </mat-option>
+
+                        </mat-select>
+                        
+                      </mat-form-field>
+                      </td>
+                      <td ><mat-form-field class="example-full-width">
+                        <input matInput placeholder="Objet" formControlName="objet" >
+                      </mat-form-field></td>
+                      </tr>
+                      <tr>
+                      <td><mat-form-field appearance="legacy">
+                        <mat-label>Analyse</mat-label>
+                        <ngx-mat-file-input formControlName="analyse" placeholder="Analyse"  ></ngx-mat-file-input>
+                        <mat-icon matSuffix>folder</mat-icon>
+                        <mat-error>
+                          Please select a file
+                        </mat-error>
+                      </mat-form-field></td>
+                      <td><mat-form-field>
+                        <ngx-mat-file-input formControlName="ordonnance" placeholder="Ordonnance" ></ngx-mat-file-input>
+                        <mat-icon matSuffix>folder</mat-icon>
+                      </mat-form-field></td>
+                     
+              </tr></table>
+                <mat-card-actions>
+                  <button mat-raised-button type="submit" color="primary"  >Enregistrer</button>
+                </mat-card-actions>
+            </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
+         <!-- <button type="button" (click)="onSavePatient()" class="btn btn-success">Enregistrer</button> -->
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+
+
+<!--
+<div fxFlex="30">
+    <mat-list>
+        <div mat-subheader>Folders</div>
+        <mat-list-item *ngFor="let folder of folders">
+          <mat-icon  mat-list-icon>folder</mat-icon>
+          <div mat-line>{{folder.name}}</div>
+          <div mat-line> {{folder.updated | date}} </div>
+        </mat-list-item>
+        <mat-divider></mat-divider>
+        
+      </mat-list>
+      </div>
+<div fxFlex="70">
+<mat-card>
+    
+    <mat-grid-list cols="3" rowHeight="1:1">
+        <mat-grid-tile><img mat-card-image src="/assets/images/Ord.gif" class="rounded mb-0" style="border: 2pt solid black;;"  alt="Photo of a Shiba Inu"></mat-grid-tile>
+        <mat-divider></mat-divider>
+        <mat-grid-tile><img mat-card-image src="/assets/images/Ord2.png" alt="Photo of a Shiba Inu"></mat-grid-tile>
+        <mat-grid-tile><img mat-card-image src="https://material.angular.io/assets/img/examples/shiba2.jpg" alt="Photo of a Shiba Inu"></mat-grid-tile>
+        <mat-grid-tile><img mat-card-image src="https://material.angular.io/assets/img/examples/shiba2.jpg" alt="Photo of a Shiba Inu"></mat-grid-tile>
+      </mat-grid-list>
+</mat-card>
+
+</div>
+
+-->
+

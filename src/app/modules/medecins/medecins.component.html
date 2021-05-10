@@ -1,0 +1,113 @@
+<h3 class="text-center">Liste des Medecins </h3>
+<br>
+<div>
+<mat-form-field>
+    <mat-label>Search</mat-label>
+     <mat-icon matSuffix>search</mat-icon>
+    <input matInput placeholder="Search" #input>
+  </mat-form-field>
+  <div class="float-right" >
+    <button mat-mini-fab color="primary" data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo">
+        <mat-icon>add</mat-icon>
+      </button>
+  
+</div>
+<mat-divider></mat-divider>
+<br>
+<div class="row" *ngIf="medecins" style="width: 100%;">
+
+    <div class="col-sm-3 " *ngFor="let medecin of  medecins">
+
+        
+        <div class="card " >
+            <div class="card-body">
+                <h5 class="card-title text-center"> {{medecin.nom}} {{medecin.prenom}} </h5>
+                <div class="text-center">
+                    <img src="assets/images/doctor.png" height="130" width="130" /> <br>
+                </div>
+                
+                <h5> <span class="card-text ">
+                        <mat-icon> phone</mat-icon>:{{medecin.tel}}
+                    </span>
+                </h5>
+                <h5> <span class="card-text ">
+                        <mat-icon> email</mat-icon>: Test@gmail.com
+                    </span></h5>
+                <h5><span class="card-text ">
+                        <mat-icon> email</mat-icon>:{{medecin.specialite}} 
+                    </span> </h5>
+            </div>
+        </div>
+    
+    </div>
+    
+</div>
+<div class="modal fade" id="exampleModal"  data-backdrop="false" >
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Nouveau Medecin</h5>
+          <button type="button" class="close" data-dismiss="modal" id="close" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <form [formGroup]="MedecinForm" (ngSubmit)="onSubmit()" >
+              <table class="example-full-width" cellspacing="0"><tr>
+                <td ><mat-form-field class="example-full-width">
+                  <input matInput placeholder="Nom" formControlName="nom" >
+                </mat-form-field></td>
+                <td><mat-form-field class="example-full-width">
+                  <input matInput placeholder="Prénom" formControlName="prenom" > 
+                </mat-form-field></td>
+              </tr></table>
+            
+              <table class="example-full-width" cellspacing="0"><tr>
+                
+                <td><label>Sexe: </label>
+                  <mat-radio-group color="primary" formControlName="sexe">
+                    <mat-radio-button  [checked]=true value="F" style="margin: 0 12px;" >F</mat-radio-button>
+                    <mat-radio-button value="M" style="margin: 0 12px;" class="mr-2"  >M</mat-radio-button>
+                  </mat-radio-group></td>
+              </table>
+              <table class="example-full-width" cellspacing="0"><tr>
+                  <td><mat-form-field class="example-full-width">
+                    <input matInput placeholder="Téléphone" formControlName="tel" >
+                  </mat-form-field></td>
+                  <td>
+                    <mat-form-field class="example-full-width">
+                      <mat-label>Email</mat-label>
+                      <input type="email" matInput formControl="email" 
+                             placeholder="Email">
+              
+                     
+                     
+                    </mat-form-field>
+                  </td>
+                </tr></table>
+
+                <table class="example-full-width" cellspacing="0"><tr>
+                  <td><mat-form-field class="example-full-width">
+                    <input matInput placeholder="CIN" formControlName="cin" >
+                  </mat-form-field></td>
+                  <td><mat-form-field class="example-full-width">
+                    <input matInput placeholder="Specialite" formControlName="specialite" >
+                  </mat-form-field></td>
+                </tr></table>
+  
+                
+  
+                <mat-card-actions>
+                  <button mat-raised-button type="submit" color="primary"  >Enregistrer</button>
+                </mat-card-actions>
+            </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
+         <!-- <button type="button" (click)="onSavePatient()" class="btn btn-success">Enregistrer</button> -->
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
