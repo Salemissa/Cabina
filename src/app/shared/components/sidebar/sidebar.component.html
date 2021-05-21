@@ -2,19 +2,19 @@
 <mat-nav-list>
     <div class="profile-card">
         <div class="header">
-            <h2>Pharmacie</h2>
-            <h4>Sista@email.com</h4>
+            <h3>Suivi  Patient</h3>
+            <h6>Sista@email.com</h6>
         </div>
-        <img src="assets/images/logo.png" alt="Soufiane FADIL">
+        <img src="assets/images/logo2.png" alt="Soufiane FADIL">
     </div>
 
     <mat-divider></mat-divider>
 
     <h2 matSubheader>Pages</h2>
 
-    <a mat-list-item routerLinkActive="list-item-active" routerLink="/">Patients</a>
-    <a mat-list-item routerLinkActive="list-item-active" routerLink="/medecins">Médecins</a>
-    <a mat-list-item routerLinkActive="list-item-active" routerLink="/articles">Randez-Vous</a>
+    <a mat-list-item routerLinkActive="list-item-active" routerLink="/" (click)="navMobileEvent()">Patients</a>
+    <a mat-list-item routerLinkActive="list-item-active" routerLink="/medecins" (click)="navMobileEvent()">Médecins</a>
+    <a mat-list-item routerLinkActive="list-item-active" routerLink="/articles" (click)="navMobileEvent()">Randez-Vous</a>
 
     <mat-divider></mat-divider>
 

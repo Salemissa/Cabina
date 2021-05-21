@@ -10,12 +10,14 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { LoaderInterceptor } from './_helpers/LoaderInterceptor';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { LoaderService } from './modules/loader.service';
+import { LightboxModule } from 'ngx-lightbox';
 import { MedecinsComponent } from './modules/medecins/medecins.component';
 
 
 @NgModule({
   declarations: [
     AppComponent,
+   
     
   ],
   imports: [
@@ -26,6 +28,7 @@ import { MedecinsComponent } from './modules/medecins/medecins.component';
     MatFormFieldModule,
     MatFormFieldModule,
     HttpClientModule,
+    
     FormsModule,
     ReactiveFormsModule,
     DefaultModule

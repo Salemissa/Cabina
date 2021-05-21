@@ -18,6 +18,8 @@ import { MedecinService } from 'src/app/services/medecin.service';
 import { MaterialFileInputModule } from 'ngx-material-file-input';
 import {MatTabsModule} from '@angular/material/tabs';
 import { LoginComponent } from 'src/app/shared/components/login/login.component';
+import { LightboxModule } from 'ngx-lightbox';
+
 
 
 
@@ -60,7 +62,8 @@ import { LoginComponent } from 'src/app/shared/components/login/login.component'
     MatSelectModule,
     MaterialFileInputModule,
     MatNativeDateModule ,
-   MatTabsModule
+    LightboxModule,
+    MatTabsModule
     
   ],
   providers: [

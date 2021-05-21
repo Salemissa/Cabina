@@ -4,9 +4,7 @@
   }
 }
 
-table {
-  width: 100%;
-}
+
 .loader-container {
   position: absolute;
   width: 100%;
@@ -14,3 +12,11 @@ table {
   z-index: 99;
   opacity: 0.8;
 }
+
+table { 
+  width: 100%; 
+  border-collapse: collapse; 
+}
+/* Zebra striping */
+
+

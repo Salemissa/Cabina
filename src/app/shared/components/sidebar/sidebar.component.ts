@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, EventEmitter, OnInit, Output } from '@angular/core';
 import {SelectionModel} from '@angular/cdk/collections';
 import {MediaMatcher} from '@angular/cdk/layout';
 import {MatTableDataSource} from '@angular/material/table';
@@ -9,7 +9,7 @@ import {MatTableDataSource} from '@angular/material/table';
   styleUrls: ['./sidebar.component.scss']
 })
 export class SidebarComponent implements OnInit {
-  
+  @Output() closenav = new EventEmitter<boolean>();
   mobileQuery: MediaQueryList;
   constructor(changeDetectorRef: ChangeDetectorRef, media: MediaMatcher) {
     this.mobileQuery = media.matchMedia('(max-width: 600px)');
@@ -18,6 +18,7 @@ export class SidebarComponent implements OnInit {
    }
 
   ngOnInit() {
+    
   }
 
   private _mobileQueryListener: () => void;
@@ -25,6 +26,15 @@ export class SidebarComponent implements OnInit {
 
   ngOnDestroy(): void {
     this.mobileQuery.removeListener(this._mobileQueryListener);
+  }
+
+  navMobileEvent(){
+    
+    if(this.mobileQuery.matches){
+      this.closenav.emit(false);
+    
+    
+    }
   }
 
 }

@@ -1,11 +1,12 @@
 <app-header (toggleSideBarForMe)="sideBarToggler()"></app-header>
+<mat-drawer-container
 
-<mat-drawer-container>
+>
     <mat-drawer 
     [mode]="(isHandset$ | async) ? 'over' : 'side'"[mode]="(isHandset$ | async) ? 'over' : 'side'"
     [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
     [opened]="sideBarOpen">
-        <app-sidebar></app-sidebar>
+        <app-sidebar  (closenav)="navmobile($event)"></app-sidebar>
     </mat-drawer>
     <mat-spinner [hidden]="!loading" class="loader-container" style="top: 50%;left: 50%;"></mat-spinner>
     <mat-drawer-content  [hidden]="loading">

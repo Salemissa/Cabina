@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Lightbox } from 'ngx-lightbox';
 import { MedecinService } from 'src/app/services/medecin.service';
 
 @Component({
@@ -9,12 +10,20 @@ import { MedecinService } from 'src/app/services/medecin.service';
 })
 export class MedecinsComponent implements OnInit {
   medecins=[];
+  album:any = [];
   
   MedecinForm : FormGroup;
   constructor(
     private formBuilder: FormBuilder,
-    private medecinService:MedecinService
-    ) { }
+    private medecinService:MedecinService,
+    private _lightbox: Lightbox
+    ) { 
+
+      this.album.push({'src':'https://via.placeholder.com/500','caption':'Imag1','thumb':'https://via.placeholder.com/150'});
+
+    this.album.push({'src':'https://via.placeholder.com/500','caption':'Imag1','thumb':'https://via.placeholder.com/150'});
+
+    }
 
   ngOnInit() {
     this.getaMedecins()
@@ -91,6 +100,14 @@ export class MedecinsComponent implements OnInit {
     }
   
 
-  
+    open(index: number): void {
+     
+      this._lightbox.open(this.album, index);
+      }
+      
+      close(): void {
+      
+      this._lightbox.close();
+      }
 
 }

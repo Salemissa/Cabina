@@ -7,6 +7,7 @@ import {MatSort} from '@angular/material/sort';
 import {MatTableDataSource} from '@angular/material/table';
 
 import { ActivatedRoute } from '@angular/router';
+import { Lightbox } from 'ngx-lightbox';
 import { Medecin } from 'src/app/Model/medecin';
 import { Patient } from 'src/app/Model/Patient';
 import { Visite } from 'src/app/Model/visite';
@@ -62,16 +63,15 @@ export class PostsComponent implements OnInit,  AfterViewInit {
   constructor(
     private formBuilder: FormBuilder,
     private activatedRoute: ActivatedRoute,
-    private patientService:PatientService,
+    public patientService:PatientService,
     public visiteService:VisiteService,
+    private _lightbox: Lightbox
   
     ) {
       const visit=new Array;
       this.dataSource = new MatTableDataSource(visit);
 
-      this.album.push({'src':'https://via.placeholder.com/500','caption':'Imag1','thumb':'https://via.placeholder.com/150'});
-
-      this.album.push({'src':'https://via.placeholder.com/500','caption':'Imag1','thumb':'https://via.placeholder.com/150'});
+     
 
 
     
@@ -234,6 +234,23 @@ export class PostsComponent implements OnInit,  AfterViewInit {
     getTS() {
       return  Date.now();
     }
+
+
+    open(src: string): void {
+      console.log(src)
+      
+      this.album=[];
+      this.album.push({'src':src,'caption':'Imag1'});
+      
+      this._lightbox.open(this.album,0);
+      }
+
+      
+      
+      close(): void {
+      
+      this._lightbox.close();
+      }
 
    
 }

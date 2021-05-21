@@ -1,3 +1,4 @@
+import { HttpEventType } from '@angular/common/http';
 import {AfterViewInit, Component, ViewChild} from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import {MatPaginator} from '@angular/material/paginator';
@@ -51,13 +52,14 @@ const DateD: Date[] = [
 })
 export class DashboardComponent implements AfterViewInit {
   loading: boolean;
-  displayedColumns: string[] = ['id','code', 'nom', 'tel', 'cin','datep','dated',"test"];
-  dataSource: MatTableDataSource<Patient>;
+  displayedColumns: string[] = ['code', 'nom', 'tel','datep','dated',"test"];
+  dataSource: MatTableDataSource<any>;
 
   @ViewChild(MatPaginator,{static :true}) paginator: MatPaginator;
   @ViewChild(MatSort,{static :true}) sort: MatSort;
   PatientForm : FormGroup;
   users: Patient[];
+  fiche: any;
   constructor(private formBuilder: FormBuilder,
     public loaderService: LoaderService,
     private patientService:PatientService,
@@ -107,7 +109,8 @@ export class DashboardComponent implements AfterViewInit {
       age: ['', Validators.required],
       sexe:['M',Validators.required],
       cin: ['', Validators.required],
-      antecedent: ['', ]
+      antecedent: ['', ],
+      fiche: [],
          
     });
   }
@@ -132,15 +135,32 @@ export class DashboardComponent implements AfterViewInit {
   }
 
   savePatient(){
+    if(this.PatientForm.value['fiche']){
+    this.fiche= this.PatientForm.value['fiche'].files[0];
+    }
+   this.PatientForm.controls['fiche'].patchValue('');
     this.patientService.add(this.PatientForm.value)
     .subscribe(
       data => {
         let el = document.getElementById("success");
         //el.click();
+
+        if(data){
+          let id=data;
+          let formData:FormData = new FormData()
+          
+          if(this.fiche){
+          this.uploadDoc(data,this.fiche);
+          console.log(1)
+          }
+
+        
+        }
+         
         setTimeout(() => {
-         // this.triggerFalseClick4Close()
-          this.router.navigate(["/patient/"+data]);
-        });
+          // this.triggerFalseClick4Close()
+           this.router.navigate(["/patient/"+data]);
+         });
 
       },
       error => {
@@ -159,7 +179,7 @@ export class DashboardComponent implements AfterViewInit {
   }
 
   getPatients(){
-    this.patientService.getResource("general/allPatients")
+    this.patientService.getResource("general/PatientsVisite")
         .subscribe(data => {
           this.users = data;
           this.dataSource.data =data ;
@@ -170,6 +190,22 @@ export class DashboardComponent implements AfterViewInit {
     });
 
     }
+
+
+    uploadDoc(id,file) {
+      this.patientService.uploadFiche(file, id,)
+        .subscribe(result => {
+          if (result.type === HttpEventType.UploadProgress) {
+            //this.progress = Math.round(100 * result.loaded/ result.total);
+          } else {
+            // alert("upload avec succees.");
+          }
+        }, err => {
+          alert("Probleme de chargement " + JSON.parse(err.error).message);
+        });
+    }
+  
+  
   
 }
 
@@ -191,8 +227,13 @@ function createNewUser(id: number): Patient {
     sexe:"M",
     antecedent:"Test",
     datep:DateP[id],
-    dated:DateD[id]
+    dated:DateD[id],
+    fiche:"",
   };
+  
+
+
+
 
 }
  

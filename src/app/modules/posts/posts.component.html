@@ -10,7 +10,7 @@
                    <img src="assets/images/rotating.png">
                </div>
                <div class="user">
-                   <img class="img-circle" src="assets/images/logo.png">
+                   <img class="img-circle" src="assets/images/patient.png">
                </div>
                <div class="content">
                    <div class="main">
@@ -33,9 +33,8 @@
                </div>
                <div class="content">
                    <div class="main">
-                    <div *ngIf="patient">
-                       <h4 class="text-center">{{patient.nom}} {{patient.prenom}}</h4>
-                       <p class="text-center"></p>
+                    <div *ngIf="patient" class="text-center">
+                      <img src="{{patientService.host+'general/getFiche/'+patient.id}}?ts='+getTS()" style="width: 250px;" height="200px"   (click)="open(patientService.host+'general/getFiche/'+patient.id)"> 
 
                        <div class="stats-container">
                            <div class="stats">
@@ -72,10 +71,10 @@
     <div class="col-sm-8">
       <mat-card  *ngIf="visite">
       
-          <div class="card-deck" *ngIf="visite.visiteDocs.length>1" >
+          <div class="card-deck" >
             <div class="card "  *ngFor="let doc of visite.visiteDocs">
-              <div class="text-center">
-              <img class="rounded" src="{{this.visiteService.host+'general/Image/'+doc.id}}?ts='+getTS()"   style="width: 100px; height: 80px;" alt="Card image cap">
+              <div class="text-center" data-backdrop="false">
+              <img class="rounded" src="{{this.visiteService.host+'general/Image/'+doc.id }}?ts='+getTS()"   style="width: 100px; height: 80px;" (click)="open(this.visiteService.host+'general/Image/'+doc.id)" alt="Card image cap">
             </div>
               <div class="card-body">
                 <h5 class="card-title"  class="text-center">{{doc.type}}</h5>

@@ -12,6 +12,7 @@ export  class Patient {
     public antecedent: string;
     public datep:Date;
     public dated:Date;
+    public fiche;
     
 
 

@@ -14,7 +14,9 @@ import { LoaderService } from 'src/app/modules/loader.service';
 export class DefaultComponent implements OnInit {
 
   sideBarOpen = true;
+  mobileQuery: MediaQueryList;
   loading: boolean;
+  
   isHandset$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Handset)
   .pipe(
     map(result => result.matches),
@@ -25,21 +27,29 @@ export class DefaultComponent implements OnInit {
     this.mobileQuery = media.matchMedia('(max-width: 600px)',);
     this._mobileQueryListener = () => changeDetectorRef.detectChanges();
     this.mobileQuery.addListener(this._mobileQueryListener);
+   
+    
     this.loaderService.isLoading.subscribe((v) => {
       this.loading = v;
     });
    }
 
-  ngOnInit() { }
+  ngOnInit() {
+  
+   }
 
 
   sideBarToggler() {
     this.sideBarOpen = !this.sideBarOpen;
   }
 
-  mobileQuery: MediaQueryList;
+ 
 
   private _mobileQueryListener: () => void;
 
+  navmobile(any){
+    this.sideBarOpen=any
+
+  }
  
 }

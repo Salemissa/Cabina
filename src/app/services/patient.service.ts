@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpRequest } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { Observable } from 'rxjs/internal/Observable';
@@ -9,7 +9,7 @@ import { Patient } from '../Model/Patient';
   providedIn: 'root'
 })
 export class PatientService {
-  
+ 
   public host = environment.apiUrl;
   private PatientBSubjet = new BehaviorSubject<[Patient]>(null);
   constructor(private http:HttpClient) { }
@@ -42,4 +42,19 @@ export class PatientService {
     let path = this.host+"PatientsByCode/"+code;
     return this.http.get<Patient>(path);
   }
+
+
+  uploadFiche(file: any, id: any) {
+    let formData: FormData = new FormData();
+    formData.append('file', file);
+    //PREP THE REQUEST FORM DATA
+
+    const req = new HttpRequest('POST', this.host+'general/uploadDocument/'+id, formData, {
+      reportProgress: true, //REPORT PROGRESS FOR VISUAL PROGRESS BAR
+      responseType: "text" // THIS DEFAULTS TO JSON, SET IT TO TEXT
+    });
+
+    return this.http.request(req);
+  }
+  
 }
